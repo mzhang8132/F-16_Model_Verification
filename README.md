@@ -1,7 +1,7 @@
 ﻿<p align="center"> <img src="gcas_py.gif"/> </p>
 
 # AeroBenchVVPython Overview
-This project is based on the F-16 model and GCAS (ground collision avoidance system) verification benchmark created in AeroBenchVV. On top of GCAS, this project introduces a novel version of AES (automatic ejection system) on the F-16 model. Currently the AES system is only available in VTOL aircrafts like the F-35B, but the AES we are proposing will allow the system to automatically eject the pilot if GCAS is unable to prevent a collision with the ground.
+This project is based on the F-16 model and GCAS (ground collision avoidance system) verification benchmark created in AeroBenchVV. On top of GCAS, this project introduces a novel version of AES (automatic ejection system) on the F-16 model. Currently the AES system is only available in VTOL (vertical takeoff and landing) aircrafts like the F-35B, but the AES we are proposing will allow the system to automatically eject the pilot if GCAS is unable to prevent a collision with the ground.
 
 # Citation
 
