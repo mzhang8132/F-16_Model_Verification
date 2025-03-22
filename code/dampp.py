@@ -36,7 +36,7 @@ def dampp(alpha):
 
     d = np.zeros((9,))
 
-    for i in xrange(9):
+    for i in range(9):
         d[i] = a[k-1, i] + abs(da) * (a[l-1, i] - a[k-1, i])
 
     return d

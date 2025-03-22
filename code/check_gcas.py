@@ -68,7 +68,7 @@ def main():
     passed, times, states, modes, ps_list, Nz_list, u_list = RunF16Sim(\
         initialState, tMax, der_func, f16_plant, ap, llc, pass_fail, multipliers=multipliers)
 
-    print "Simulation Conditions Passed: {}".format(passed)
+    print("Simulation Conditions Passed: {}".format(passed))
 
     if animFilename is not None:
         plot3d_anim(times, states, modes, ps_list, Nz_list, filename=animFilename)

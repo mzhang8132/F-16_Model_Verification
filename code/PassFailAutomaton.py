@@ -130,8 +130,8 @@ class FlightLimitsPFA(PassFailAutomaton):
             if self.print_error:
                 self.print_error = False
 
-                print "{} limit violated at time {:.2f} sec. {} < minimum ({})".format(
-                    label, time, value, minVal)
+                print("{} limit violated at time {:.2f} sec. {} < minimum ({})".format(
+                    label, time, value, minVal))
 
         elif value > maxVal:
             self.passed = False
@@ -139,8 +139,8 @@ class FlightLimitsPFA(PassFailAutomaton):
             if self.print_error:
                 self.print_error = False
 
-                print "{} limit violated at time {:.2f} sec. {} > maximum ({})".format(
-                    label, time, value, maxVal)
+                print("{} limit violated at time {:.2f} sec. {} > maximum ({})".format(
+                    label, time, value, maxVal))
 
     @abc.abstractmethod
     def advance(self, t, x_f16, autopilot_state, xd, u, Nz, ps, Ny_r):
@@ -201,8 +201,8 @@ class AirspeedPFA(PassFailAutomaton):
             if self.print_error:
                 self.print_error = False
 
-                print "{} limit violated at time {:.2f} sec. {} < minimum ({})".format(
-                    label, time, value, minVal)
+                print("{} limit violated at time {:.2f} sec. {} < minimum ({})".format(
+                    label, time, value, minVal))
 
         elif value > maxVal:
             self.passed = False
@@ -210,8 +210,8 @@ class AirspeedPFA(PassFailAutomaton):
             if self.print_error:
                 self.print_error = False
 
-                print "{} limit violated at time {:.2f} sec. {} > maximum ({})".format(
-                    label, time, value, maxVal)
+                print("{} limit violated at time {:.2f} sec. {} > maximum ({})".format(
+                    label, time, value, maxVal))
 
     @abc.abstractmethod
     def advance(self, t, x_f16, autopilot_state, xd, u, Nz, ps, Ny_r):

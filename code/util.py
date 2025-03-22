@@ -34,7 +34,7 @@ def printmat(mat, main_label, row_label_str, col_label_str):
     if len(mat.shape) == 1:
         mat.shape = (1, mat.shape[0]) # one-row matrix
 
-    print "{} =".format(main_label)
+    print(f'{main_label} =')
 
     row_labels = None if row_label_str is None else row_label_str.split(' ')
     col_labels = col_label_str.split(' ')
@@ -50,23 +50,23 @@ def printmat(mat, main_label, row_label_str, col_label_str):
 
     # add blank space for row labels
     if row_labels is not None:
-        print "{: <{}}".format('', width),
+        print("{: <{}}".format('', width))
 
     # print col lables
     for col_label in col_labels:
         if len(col_label) > width:
             col_label = col_label[:width]
 
-        print "{: >{}}".format(col_label, width),
+        print("{: >{}}".format(col_label, width))
 
-    print ""
+    print("")
 
     if row_labels is not None:
         assert len(row_labels) == mat.shape[0], \
             "row labels (len={}) expected one element for each row of the matrix ({})".format( \
             len(row_labels), mat.shape[0])
 
-    for r in xrange(mat.shape[0]):
+    for r in range(mat.shape[0]):
         row = mat[r]
 
         if row_labels is not None:
@@ -75,13 +75,13 @@ def printmat(mat, main_label, row_label_str, col_label_str):
             if len(label) > width:
                 label = label[:width]
 
-            print "{:<{}}".format(label, width),
+            print("{:<{}}".format(label, width))
 
         for num in row:
             #print "{:#<{}}".format(num, width),
-            print "{:{}.{}g}".format(num, width, width-3),
+            print("{:{}.{}g}".format(num, width, width-3))
 
-        print ""
+        print("")
 
 
 def fix(ele):

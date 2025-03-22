@@ -24,8 +24,8 @@ def scale3d(pts, scale_list):
 
     rv = np.zeros(pts.shape)
 
-    for i in xrange(pts.shape[0]):
-        for d in xrange(3):
+    for i in range(pts.shape[0]):
+        for d in range(3):
             rv[i, d] = scale_list[d] * pts[i, d]
 
     return rv
@@ -51,7 +51,7 @@ def rotate3d(pts, theta, psi, phi):
 
     rv = np.zeros(pts.shape)
 
-    for i in xrange(pts.shape[0]):
+    for i in range(pts.shape[0]):
         rv[i] = np.dot(pts[i], transform_matrix)
 
     return rv
@@ -221,15 +221,15 @@ def plot3d_anim(times, states, modes, ps_list, Nz_list, skip=1, filename=None):
     if filename is not None:
 
         if filename.endswith('.gif'):
-            print "\nSaving animation to '{}' using 'imagemagick'...".format(filename)
+            print("\nSaving animation to '{}' using 'imagemagick'...".format(filename))
             anim_obj.save(filename, dpi=80, writer='imagemagick')
-            print "Finished saving to {} in {:.1f} sec".format(filename, time.time() - start)
+            print("Finished saving to {} in {:.1f} sec".format(filename, time.time() - start))
         else:
             fps = 60
             codec = 'libx264'
 
-            print "\nSaving '{}' at {:.2f} fps using ffmpeg with codec '{}'.".format(
-                filename, fps, codec)
+            print("\nSaving '{}' at {:.2f} fps using ffmpeg with codec '{}'.".format(
+                filename, fps, codec))
 
             # if this fails do: 'sudo apt-get install ffmpeg'
             try:
@@ -239,10 +239,10 @@ def plot3d_anim(times, states, modes, ps_list, Nz_list, skip=1, filename=None):
                     extra_args += ['-vcodec', str(codec)]
 
                 anim_obj.save(filename, fps=fps, extra_args=extra_args)
-                print "Finished saving to {} in {:.1f} sec".format(filename, time.time() - start)
+                print("Finished saving to {} in {:.1f} sec".format(filename, time.time() - start))
             except AttributeError:
                 traceback.print_exc()
-                print "\nSaving video file failed! Is ffmpeg installed? Can you run 'ffmpeg' in the terminal?"
+                print("\nSaving video file failed! Is ffmpeg installed? Can you run 'ffmpeg' in the terminal?")
     else:
         plt.show()
 
@@ -258,7 +258,7 @@ def plot2d(filename, times, plot_data_list):
 
     fig = plt.figure(figsize=(7, 5))
 
-    for plot_index in xrange(num_plots):
+    for plot_index in range(num_plots):
         ax = fig.add_subplot(num_plots, 1, plot_index + 1)
         ax.tick_params(axis='both', which='major', labelsize=16)
 

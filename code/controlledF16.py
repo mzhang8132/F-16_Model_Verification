@@ -55,7 +55,7 @@ def controlledF16(t, x_f16, F16_model, autopilot, llc, multipliers=None):
 
     u_rad[0] = u_deg[0]
 
-    for i in xrange(1, 4):
+    for i in range(1, 4):
         u_rad[i] = deg2rad(u_deg[i])
 
     u_rad[4:7] = u_ref[0:3]
