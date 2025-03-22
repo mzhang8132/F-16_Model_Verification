@@ -1,12 +1,7 @@
 ﻿<p align="center"> <img src="gcas_py.gif"/> </p>
 
-Note: This is the v1 branch of the code, which corresponds to the original publication version and benchmarks.
-
 # AeroBenchVVPython Overview
-This project contains a python version of models and controllers that test automated aircraft maneuvers by performing simulations. The hope is to provide a benchmark to motivate better verification and analysis methods, working beyond models based on Dubins car dynamics, towards the sorts of models used in aerospace engineering. Roughly speaking, the dynamics are nonlinear, have about 10-20 dimensions (continuous state variables), and hybrid in the sense of discontinuous ODEs, but not with jumps in the state. 
-
-This is a python port of the original matlab version, which can can see for
-more information: https://github.com/pheidlauf/AeroBenchVV
+This project is based on the F-16 model and GCAS (ground collision avoidance system) verification benchmark created in AeroBenchVV. On top of GCAS, this project introduces a novel version of AES (automatic ejection system) on the F-16 model. Currently the AES system is only available in VTOL aircrafts like the F-35B, but the AES we are proposing will allow the system to automatically eject the pilot if GCAS is unable to prevent a collision with the ground.
 
 # Citation
 
@@ -25,8 +20,3 @@ The following Python libraries are required (can be installed using `sudo pip in
 `slycot` - for control design (not needed for simulation)
 
 `control` - for control design (not needed for simulation)
-
-
-
-### Release Documentation
-Distribution A: Approved for Public Release (88ABW-2017-6379)
