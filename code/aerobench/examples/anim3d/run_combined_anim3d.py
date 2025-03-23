@@ -8,7 +8,11 @@ import sys
 
 import numpy as np
 
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
+
 from aerobench.visualize import anim3d
+
 
 from run_GCAS_anim3d import simulate as simulate_gcas
 from run_u_turn_anim3d import simulate as simulate_waypoint
