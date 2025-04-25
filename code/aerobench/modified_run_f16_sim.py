@@ -1,6 +1,5 @@
 '''
-Stanley Bak
-run_f16_sim python version
+modified run_f16_sim python version
 '''
 
 import time
@@ -8,10 +7,10 @@ import time
 import numpy as np
 from scipy.integrate import RK45
 
-from aerobench.highlevel.controlled_f16 import controlled_f16
+from aerobench.highlevel.modified_controlled_f16 import modified_controlled_f16
 from aerobench.util import get_state_names, Euler, StateIndex, print_state, Freezable
 
-class F16SimState(Freezable):
+class modified_F16SimState(Freezable):
     '''object containing simulation state
 
     With this interface you can run partial simulations, rather than having to simulate for the entire time bound
@@ -204,9 +203,7 @@ class F16SimState(Freezable):
             mode_changed = ap.advance_discrete_mode(self.times[-1], self.states[-1])
             self.modes.append(ap.mode)
 
-            stop_func = self.custom_stop_func if self.custom_stop_func is not None else ap.is_finished
-
-            if stop_func(self.times[-1], self.states[-1]):
+            if ap.mode == "eject":
                 # this both causes the outer loop to exit and sets res['status'] appropriately
                 self.integrator.status = 'autopilot finished'
                 break
@@ -224,7 +221,7 @@ class F16SimState(Freezable):
         self.total_sim_time += time.perf_counter() - start
         np.seterr(**oldsettings)
 
-def run_f16_sim(initial_state, tmax, ap, step=1/30, extended_states=False,
+def modified_run_f16_sim(initial_state, tmax, ap, step=1/30, extended_states=False,
                 integrator_str='rk45', v2_integrators=False, print_errors=True,
                 custom_stop_func=None):
     '''Simulates and analyzes autonomous F-16 maneuvers
@@ -248,7 +245,7 @@ def run_f16_sim(initial_state, tmax, ap, step=1/30, extended_states=False,
     These are tuples if multiple aircraft are used
     '''
 
-    fss = F16SimState(initial_state, ap, step, extended_states,
+    fss = modified_F16SimState(initial_state, ap, step, extended_states,
                 integrator_str, v2_integrators, print_errors, custom_stop_func=custom_stop_func)
 
     fss.simulate_to(tmax)
@@ -283,7 +280,7 @@ def make_der_func(ap, model_str, v2_integrators):
 
         u_refs = ap.get_checked_u_ref(t, full_state)
 
-        num_aircraft = u_refs.size // 4
+        num_aircraft = u_refs.size // 5
         num_vars = len(get_state_names()) + ap.llc.get_num_integrators()
         assert full_state.size // num_vars == num_aircraft
 
@@ -294,22 +291,22 @@ def make_der_func(ap, model_str, v2_integrators):
 
             #print(f".called der_func(aircraft={i}, t={t}, state={full_state}")
 
-            alpha = state[StateIndex.ALPHA]
-            if not -2 < alpha < 2:
-                raise SimModelError(f"alpha ({alpha}) out of bounds")
+            # alpha = state[StateIndex.ALPHA]
+            # if not -10 < alpha < 10:
+            #     raise SimModelError(f"alpha ({alpha}) out of bounds")
 
-            vel = state[StateIndex.VEL]
-            # even going lower than 300 is probably not a good idea
-            if not 200 <= vel <= 3000:
-                raise SimModelError(f"velocity ({vel}) out of bounds")
+            # vel = state[StateIndex.VEL]
+            # # even going lower than 300 is probably not a good idea
+            # if not -2000000 <= vel <= 30000000:
+            #     raise SimModelError(f"velocity ({vel}) out of bounds")
 
-            alt = state[StateIndex.ALT]
-            if not -10000 < alt < 100000:
-                raise SimModelError(f"altitude ({alt}) out of bounds")
+            # alt = state[StateIndex.ALT]
+            # if not -100000000 < alt < 1000000000:
+            #     raise SimModelError(f"altitude ({alt}) out of bounds")
 
             u_ref = u_refs[5*i:5*(i+1)]
 
-            xd = controlled_f16(t, state, u_ref, ap.llc, model_str, v2_integrators)[0]
+            xd = modified_controlled_f16(t, state, u_ref, ap.llc, model_str, v2_integrators)[0]
             xds.append(xd)
 
         rv = np.hstack(xds)
@@ -340,7 +337,7 @@ def get_extended_states(ap, t, full_state, model_str, v2_integrators):
         state = full_state[num_vars*i:num_vars*(i+1)]
         u_ref = u_refs[5*i:5*(i+1)]
 
-        xd, u, Nz, ps, Ny_r = controlled_f16(t, state, u_ref, llc, model_str, v2_integrators)
+        xd, u, Nz, ps, Ny_r = modified_controlled_f16(t, state, u_ref, llc, model_str, v2_integrators)
 
         xd_tup.append(xd)
         u_tup.append(u)

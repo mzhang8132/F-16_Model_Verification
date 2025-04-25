@@ -34,8 +34,8 @@ def simulate():
     beta = 0                # Side slip angle (rad)
 
     # Initial Attitude
-    alt = 6200        # altitude (ft)
-    vt = 540          # initial velocity (ft/sec)
+    alt = 10200        # altitude (ft)
+    vt = 1040          # initial velocity (ft/sec)
     phi = 0           # Roll angle from wings level (rad)
     theta = (-math.pi/2)*0.7         # Pitch angle from nose level (rad)
     psi = 0.8 * math.pi   # Yaw angle from North (rad)
@@ -47,7 +47,7 @@ def simulate():
 
     ap = GcasAutopilot(init_mode='waiting', stdout=True)
 
-    ap.waiting_time = 5
+    ap.waiting_time = 2.2
     ap.waiting_cmd[1] = 2.2 # ps command
 
     # custom gains
@@ -72,9 +72,8 @@ def simulate():
         psMaxAccelDeg=500) # deg/s/s
 
     verifier = SafetyLimitsVerifier(safety_limits, ap.llc)
-    verifier.verify(res)
 
-    return res
+    return res, verifier
 
 def main():
     'main function'
@@ -86,13 +85,27 @@ def main():
         filename = ''
         print("Plotting to the screen. To save a video, pass a command-line argument ending with '.mp4' or '.gif'.")
 
-    res = simulate()
+    res, verifier = simulate()
 
     plot.plot_attitude(res, figsize=(12, 10))
     plt.savefig('gcas_attitude.png')
     plt.close()
     
+    plot.plot_single(res, 'alt', title='Altitude (ft)')
+    alt_filename = 'gcas_altitude.png'
+    plt.savefig(alt_filename)
+    print(f"Made {alt_filename}")
+    plt.close()
+    
+    plot.plot_single(res, 'vt', title='Speed (ft/s)')
+    alt_filename = 'gcas_velocity.png'
+    plt.savefig(alt_filename)
+    print(f"Made {alt_filename}")
+    plt.close()
+    
     anim3d.make_anim(res, filename, elev=15, azim=-150)
+    
+    verifier.verify(res)
 
 if __name__ == '__main__':
     main()

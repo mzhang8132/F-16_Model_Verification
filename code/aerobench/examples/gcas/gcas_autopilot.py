@@ -45,6 +45,10 @@ class GcasAutopilot(Autopilot):
 
         if self.stdout:
             print(s)
+            
+    def is_finished(self, t, x_f16):
+        if self.mode == 'standby':
+            return True
 
     def advance_discrete_mode(self, t, x_f16):
         '''

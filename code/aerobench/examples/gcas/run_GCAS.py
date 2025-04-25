@@ -9,6 +9,10 @@ import math
 from numpy import deg2rad
 import matplotlib.pyplot as plt
 
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
+
 from aerobench.run_f16_sim import run_f16_sim
 
 from aerobench.visualize import plot
