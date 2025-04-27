@@ -80,7 +80,7 @@ class modified_LowLevelController(Freezable):
         u_deg[0] = u_ref[3]
         
         if u_ref[4] != 0:
-            u_deg[1] = 20
+            u_deg[1] = -20
 
         # Add in equilibrium control
         u_deg[0:4] += self.uequil

@@ -31,8 +31,8 @@ def main():
     beta = 0                # Side slip angle (rad)
 
     # Initial Attitude
-    alt = 10200        # altitude (ft)
-    vt = 2040          # initial velocity (ft/sec)
+    alt = 4000        # altitude (ft)
+    vt = 1040          # initial velocity (ft/sec)
     phi = 0           # Roll angle from wings level (rad)
     theta = (-math.pi/2)*0.7         # Pitch angle from nose level (rad)
     psi = 0.8 * math.pi   # Yaw angle from North (rad)
@@ -46,9 +46,9 @@ def main():
     aes = AESAutopilot(init_mode='waiting', stdout=True)
 
     gcas.waiting_time = 2.2
-    aes.waiting_time = 2.2
+    aes.waiting_time = 1
     gcas.waiting_cmd[1] = 2.2 # ps command
-    aes.waiting_cmd[1] = 2.2 # ps command
+    aes.waiting_cmd[1] = 1 # ps command
 
     # custom gains
     aes.cfg_k_prop = 1.4
