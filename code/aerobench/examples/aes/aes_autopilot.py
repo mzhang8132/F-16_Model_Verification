@@ -35,26 +35,6 @@ class AESAutopilot(modified_Autopilot):
         llc = modified_LowLevelController(gain_str=gain_str)
 
         modified_Autopilot.__init__(self, init_mode, llc=llc)
-
-    def advance_discrete_mode(self, t, x_f16):
-        premode = self.mode
-
-        ## AES controller state machine
-        if self.mode == 'standby':
-            if self.make_plane_safe_for_ejection(x_f16):
-                self.mode = 'recover'
-        elif self.mode == 'recover':
-            if self.can_eject(x_f16):
-                self.mode = 'eject'
-        elif self.mode == 'eject':
-            pass  # stay in eject once committed
-
-        changed = premode != self.mode
-
-        if changed:
-            self.log(f"AES transition {premode} -> {self.mode} at time {t}")
-
-        return changed
     
     def log(self, s):
         'print to terminal if stdout is true'
