@@ -31,8 +31,8 @@ def main():
     beta = 0                # Side slip angle (rad)
 
     # Initial Attitude
-    alt = 4000        # altitude (ft)
-    vt = 1040          # initial velocity (ft/sec)
+    alt = 500        # altitude (ft)
+    vt = 1000          # initial velocity (ft/sec)
     phi = 0           # Roll angle from wings level (rad)
     theta = (-math.pi/2)*0.7         # Pitch angle from nose level (rad)
     psi = 0.8 * math.pi   # Yaw angle from North (rad)
@@ -74,6 +74,31 @@ def main():
         verifier = SafetyLimitsVerifier(safety_limits, gcas.llc)
         
         verifier.verify(res)
+        
+        if len(sys.argv) > 1 and (sys.argv[1].endswith('.mp4') or sys.argv[1].endswith('.gif')):
+            filename = sys.argv[1]
+            print(f"saving result to '{filename}'")
+        else:
+            filename = ''
+            print("Plotting to the screen. To save a video, pass a command-line argument ending with '.mp4' or '.gif'.")
+
+        plot.plot_attitude(res, figsize=(12, 10))
+        plt.savefig('gcas_attitude.png')
+        plt.close()
+        
+        plot.plot_single(res, 'alt', title='Altitude (ft)')
+        alt_filename = 'gcas_altitude.png'
+        plt.savefig(alt_filename)
+        print(f"Made {alt_filename}")
+        plt.close()
+        
+        plot.plot_single(res, 'vt', title='Speed (ft/s)')
+        alt_filename = 'gcas_velocity.png'
+        plt.savefig(alt_filename)
+        print(f"Made {alt_filename}")
+        plt.close()
+        
+        anim3d.make_anim(res, filename, elev=15, azim=-150)
     except AssertionError as error:
         print("GCAS failed to recover")
         
@@ -90,34 +115,8 @@ def main():
             verifier = SafetyLimitsVerifier(safety_limits, aes.llc)
             
             verifier.verify(res)
-            
-            if len(sys.argv) > 1 and (sys.argv[1].endswith('.mp4') or sys.argv[1].endswith('.gif')):
-                filename = sys.argv[1]
-                print(f"saving result to '{filename}'")
-            else:
-                filename = ''
-                print("Plotting to the screen. To save a video, pass a command-line argument ending with '.mp4' or '.gif'.")
-
-            plot.plot_attitude(res, figsize=(12, 10))
-            plt.savefig('gcas_attitude.png')
-            plt.close()
-            
-            plot.plot_single(res, 'alt', title='Altitude (ft)')
-            alt_filename = 'gcas_altitude.png'
-            plt.savefig(alt_filename)
-            print(f"Made {alt_filename}")
-            plt.close()
-            
-            plot.plot_single(res, 'vt', title='Speed (ft/s)')
-            alt_filename = 'gcas_velocity.png'
-            plt.savefig(alt_filename)
-            print(f"Made {alt_filename}")
-            plt.close()
-            
-            anim3d.make_anim(res, filename, elev=15, azim=-150)
         except AssertionError as error:
             print("AES broke the plane")
-            print(error)
             
         try:
             safety_limits = SafetyLimits( \
